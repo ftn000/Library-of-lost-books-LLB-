@@ -1,28 +1,25 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    private Rigidbody rb;
-    private Vector3 moveDirection;
+    [SerializeField] private Rigidbody rb;
+    private Vector2 moveInput;
 
-    void Initialize()
+    public void Initialize()
     {
-        rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
-    void Update()
+    public void OnMove(InputAction.CallbackContext context)
     {
-        // Получаем ввод (WASD или стрелки)
-        float moveX = Input.GetAxis("Horizontal");
-        float moveY = Input.GetAxis("Vertical");
-
-        moveDirection = new Vector3(moveX, 0, moveY).normalized;
+        moveInput = context.ReadValue<Vector2>();
     }
 
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+        Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
+        rb.MovePosition(rb.position + move * moveSpeed * Time.fixedDeltaTime);
     }
 }
