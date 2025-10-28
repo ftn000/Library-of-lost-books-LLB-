@@ -1,12 +1,7 @@
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour
 {
-    [SerializeField] public string objectName;
-
-    public virtual void Interact()
-    {
-        Debug.Log($"Взаимодействие с {objectName}");
-    }
+    public string objectName = "Объект";
+    public abstract void Interact(PlayerInventory inventory);
 }
-
