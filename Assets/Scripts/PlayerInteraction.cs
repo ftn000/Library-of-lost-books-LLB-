@@ -1,7 +1,7 @@
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -10,11 +10,12 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private LayerMask interactableLayer;
     [SerializeField] private TextMeshProUGUI interactionHint;
     [SerializeField] private PlayerInventory inventory;
+    [SerializeField] private PlayerController playerController;
 
     private Interactable currentTarget;
-    private Outline currentOutline;
+    private bool inDialogue = false;
 
-    private void Start()
+    public void Initialize()
     {
         if (interactionHint != null)
             interactionHint.text = "";
@@ -22,68 +23,77 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
-        CheckForInteractable();
+        if (!inDialogue) // во время диалога не переключаем цель
+            CheckForInteractable();
     }
 
     private void CheckForInteractable()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, interactRange, interactableLayer);
 
-        Interactable newTarget = null;
-        Outline newOutline = null;
-
         if (colliders.Length > 0)
         {
-            newTarget = colliders[0].GetComponent<Interactable>();
-
-            if (newTarget != null)
-            {
-                newOutline = newTarget.GetComponent<Outline>();
-
-                if (interactionHint != null)
-                    interactionHint.text = "Нажмите E, чтобы взаимодействовать";
-            }
+            currentTarget = colliders[0].GetComponent<Interactable>();
+            if (interactionHint != null && currentTarget != null)
+                interactionHint.text = "Нажмите E, чтобы взаимодействовать";
+            Debug.DrawLine(transform.position, colliders[0].transform.position, Color.green);
         }
         else
         {
-            if (interactionHint != null)
-                interactionHint.text = "";
-        }
-
-        // Если сменился объект, выключаем старый Outline
-        if (currentOutline != null && currentOutline != newOutline)
-            currentOutline.enabled = false;
-
-        // Включаем Outline нового объекта
-        if (newOutline != null && newOutline != currentOutline)
-            newOutline.enabled = true;
-
-        currentTarget = newTarget;
-        currentOutline = newOutline;
-    }
-
-    public void Interact(InputAction.CallbackContext context)
-    {
-        if (context.started && currentTarget != null)
-        {
-            currentTarget.Interact(inventory);
-
-            // После поднятия предмета выключаем Outline
-            if (currentOutline != null)
-            {
-                currentOutline.enabled = false;
-                currentOutline = null;
-            }
-
             currentTarget = null;
             if (interactionHint != null)
                 interactionHint.text = "";
         }
     }
 
-    private void OnDrawGizmosSelected()
+    public void Interact(InputAction.CallbackContext context)
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, interactRange);
+        if (!context.started) return;
+
+        Debug.Log($"PlayerInteraction: Interact called. currentTarget={(currentTarget ? currentTarget.name : "null")}, inDialogue={inDialogue}");
+
+        if (inDialogue && currentTarget is NPC)
+        {
+            // Если уже в диалоге — шлём интеракт NPC ещё раз, чтобы перелистнуть
+            currentTarget.Interact(inventory);
+            return;
+        }
+
+        if (currentTarget != null)
+        {
+            currentTarget.Interact(inventory);
+
+            // Если это NPC — включаем режим диалога, иначе очищаем цель
+            if (currentTarget is NPC)
+            {
+                inDialogue = true;
+                if (interactionHint != null)
+                    interactionHint.text = ""; // можно убрать подсказку пока диалог открыт
+            }
+            else
+            {
+                currentTarget = null;
+                if (interactionHint != null)
+                    interactionHint.text = "";
+            }
+        }
+    }
+
+    public void StartDialogue()
+    {
+        inDialogue = true;
+        if (playerController != null)
+            playerController.enabled = false; // блокируем движение
+    }
+
+    // Этот метод вызывается NPC по окончании диалога (см. NPC.ContinueDialogue)
+    public void EndDialogue()
+    {
+        inDialogue = false;
+        if (playerController != null)
+            playerController.enabled = true;
+        currentTarget = null;
+        if (interactionHint != null)
+            interactionHint.text = "";
     }
 }

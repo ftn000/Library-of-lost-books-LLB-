@@ -3,7 +3,7 @@ using UnityEngine;
 public class Shelf : Interactable
 {
     public int totalSlots = 3;
-    private int storedBooks = 0;
+    public int storedBooks = 0;
 
     public override void Interact(PlayerInventory inventory)
     {
