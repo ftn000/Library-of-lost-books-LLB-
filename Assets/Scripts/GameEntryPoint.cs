@@ -6,6 +6,7 @@ public class GameEntryPoint : MonoBehaviour
     [SerializeField] PlayerInteraction playerInteraction;
     [SerializeField] NPC npc;
     [SerializeField] DialogueUI dialogueUI;
+    [SerializeField] DialogueController dialogueController;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,6 +14,7 @@ public class GameEntryPoint : MonoBehaviour
         playerInteraction.Initialize();
         npc.Initialize();
         dialogueUI.Initialize();
+        dialogueController.Initialize();
     }
 
     // Update is called once per frame

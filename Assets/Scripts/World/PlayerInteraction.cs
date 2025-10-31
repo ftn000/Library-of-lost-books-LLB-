@@ -1,11 +1,10 @@
-using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
+using TMPro;
 using UnityEngine.InputSystem;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    [Header("Настройки взаимодействия")]
+    [Header("Settings")]
     [SerializeField] private float interactRange = 2f;
     [SerializeField] private LayerMask interactableLayer;
     [SerializeField] private TextMeshProUGUI interactionHint;
@@ -21,9 +20,21 @@ public class PlayerInteraction : MonoBehaviour
             interactionHint.text = "";
     }
 
+    private void OnEnable()
+    {
+        EventBus.Subscribe<DialogueStartedEvent>(OnDialogueStarted);
+        EventBus.Subscribe<DialogueEndedEvent>(OnDialogueEnded);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<DialogueStartedEvent>(OnDialogueStarted);
+        EventBus.Unsubscribe<DialogueEndedEvent>(OnDialogueEnded);
+    }
+
     private void Update()
     {
-        if (!inDialogue) // во время диалога не переключаем цель
+        if (!inDialogue)
             CheckForInteractable();
     }
 
@@ -36,7 +47,6 @@ public class PlayerInteraction : MonoBehaviour
             currentTarget = colliders[0].GetComponent<Interactable>();
             if (interactionHint != null && currentTarget != null)
                 interactionHint.text = "Нажмите E, чтобы взаимодействовать";
-            Debug.DrawLine(transform.position, colliders[0].transform.position, Color.green);
         }
         else
         {
@@ -50,50 +60,31 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (!context.started) return;
 
-        Debug.Log($"PlayerInteraction: Interact called. currentTarget={(currentTarget ? currentTarget.name : "null")}, inDialogue={inDialogue}");
-
-        if (inDialogue && currentTarget is NPC)
-        {
-            // Если уже в диалоге — шлём интеракт NPC ещё раз, чтобы перелистнуть
-            currentTarget.Interact(inventory);
-            return;
-        }
+        Debug.Log($"[PlayerInteraction] Interact pressed. inDialogue={inDialogue}, currentTarget={(currentTarget ? currentTarget.name : "null")}");
 
         if (currentTarget != null)
         {
             currentTarget.Interact(inventory);
-
-            // Если это NPC — включаем режим диалога, иначе очищаем цель
-            if (currentTarget is NPC)
-            {
-                inDialogue = true;
-                if (interactionHint != null)
-                    interactionHint.text = ""; // можно убрать подсказку пока диалог открыт
-            }
-            else
-            {
-                currentTarget = null;
-                if (interactionHint != null)
-                    interactionHint.text = "";
-            }
         }
     }
 
-    public void StartDialogue()
+    private void OnDialogueStarted(DialogueStartedEvent evt)
     {
         inDialogue = true;
-        if (playerController != null)
-            playerController.enabled = false; // блокируем движение
-    }
-
-    // Этот метод вызывается NPC по окончании диалога (см. NPC.ContinueDialogue)
-    public void EndDialogue()
-    {
-        inDialogue = false;
-        if (playerController != null)
-            playerController.enabled = true;
+        playerController.enabled = false;
         currentTarget = null;
         if (interactionHint != null)
             interactionHint.text = "";
+        Debug.Log($"[PlayerInteraction] Started dialogue with NPC {evt.npc.name}");
+    }
+
+    private void OnDialogueEnded(DialogueEndedEvent evt)
+    {
+        inDialogue = false;
+        playerController.enabled = true;
+        currentTarget = null;
+        if (interactionHint != null)
+            interactionHint.text = "";
+        Debug.Log($"[PlayerInteraction] Dialogue ended with NPC {evt.npc.name}");
     }
 }
