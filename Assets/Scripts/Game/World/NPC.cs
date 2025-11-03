@@ -8,17 +8,20 @@ public class NPC : Interactable
     [SerializeField] private DialogueNode[] dialogueAfterQuest;
 
     [Header("Quest")]
-    [SerializeField] private GameObject[] booksToSpawn;
+    [SerializeField] private GameObject bookPrefab; // Префаб книги
+    [SerializeField] private int minBooks = 1;
+    [SerializeField] private int maxBooks = 5;
+    [SerializeField] private Transform[] spawnPoints; // Точки, где могут появляться книги
     [SerializeField] private Shelf shelf;
     [SerializeField] private PlayerInventory playerInventory;
 
+    private GameObject[] spawnedBooks;
     private bool questGiven = false;
     private bool questCompleted = false;
 
     public void Initialize()
     {
-        foreach (var book in booksToSpawn)
-            book.SetActive(false);
+        
     }
 
     /// <summary>
@@ -54,7 +57,7 @@ public class NPC : Interactable
         playerInventory = inventory;
 
         // Проверяем выполнение квеста сразу
-        if (!questCompleted && questGiven && shelf.storedBooks >= booksToSpawn.Length)
+        if (!questCompleted && questGiven && shelf.storedBooks >= spawnedBooks.Length)
         {
             questCompleted = true;
             playerInventory.keysCount++;
@@ -71,16 +74,29 @@ public class NPC : Interactable
         if (!questGiven)
         {
             questGiven = true;
-            foreach (var book in booksToSpawn)
-                book.SetActive(true);
+            SpawnBooks();
         }
 
-        if (questGiven && !questCompleted && shelf.storedBooks >= booksToSpawn.Length)
+        if (questGiven && !questCompleted && shelf.storedBooks >= spawnedBooks.Length)
         {
             questCompleted = true;
             playerInventory.keysCount++;
             Debug.Log($"{name}: Ключ выдан игроку!");
         }
+    }
+
+    private void SpawnBooks()
+    {
+        int bookCount = Random.Range(minBooks, maxBooks);
+        spawnedBooks = new GameObject[bookCount];
+
+        for (int i = 0; i < bookCount; i++)
+        {
+            Transform point = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            spawnedBooks[i] = Instantiate(bookPrefab, point.position, point.rotation);
+        }
+
+        Debug.Log($"[{name}] Задание выдано: нужно собрать {bookCount} книг.");
     }
 }
 
