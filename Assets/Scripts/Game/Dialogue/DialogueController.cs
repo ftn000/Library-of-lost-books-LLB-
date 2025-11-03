@@ -73,6 +73,12 @@ public class DialogueController : MonoBehaviour
                 btnObj.GetComponent<Button>().onClick.AddListener(() => OnChoiceSelected(choice.nextNodeIndex));
             }
         }
+
+        if (node.nodeType == DialogueNodeType.RestartQuest)
+        {
+            EventBus.RestartQuest();
+            Debug.Log("[DialogueController] Quest restarted via dialogue node");
+        }
     }
 
     private IEnumerator TypeText(string line)
@@ -134,4 +140,10 @@ public class DialogueController : MonoBehaviour
         EventBus.Raise(new DialogueEndedEvent(currentNPC));
         currentNPC = null;
     }
+}
+
+public enum DialogueNodeType
+{
+    Normal,
+    RestartQuest
 }

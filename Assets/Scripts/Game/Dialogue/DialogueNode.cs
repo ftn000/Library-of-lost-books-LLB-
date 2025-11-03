@@ -3,6 +3,7 @@ public class DialogueNode
 {
     public string text;                  // реплика NPC
     public DialogueChoice[] choices;     // null или пустой = линейная реплика
+    public DialogueNodeType nodeType = DialogueNodeType.Normal;
 }
 
 [System.Serializable]

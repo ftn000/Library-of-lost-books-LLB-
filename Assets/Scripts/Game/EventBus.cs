@@ -36,4 +36,8 @@ public static class EventBus
         }
     }
 
+    public static event Action OnQuestRestarted;
+
+    public static void RestartQuest() => OnQuestRestarted?.Invoke();
+
 }
