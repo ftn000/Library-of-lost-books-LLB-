@@ -14,7 +14,7 @@ public class GameEntryPoint : MonoBehaviour
     {
         playerController.Initialize();
         playerInteraction.Initialize();
-        npc.Initialize();
+        //npc.Initialize();
         dialogueUI.Initialize();
         dialogueController.Initialize();
         movementWithStamina.Initialize();
