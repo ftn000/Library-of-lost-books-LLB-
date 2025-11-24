@@ -21,7 +21,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         menuUI.SetActive(false);
-        //Time.timeScale = 1f; // Возобновляем игру
+        Time.timeScale = 1f; // Возобновляем игру
         isPaused = false;
     }
 
