@@ -27,9 +27,9 @@ public class PlayerMovementWithStamina : MonoBehaviour
     [SerializeField] private Color lowStaminaColor = Color.red;
     [SerializeField] private float blinkSpeed = 4f;
 
-    [Header("Inventory")]
-    [SerializeField] private PlayerInventory playerInventory; // количество книг в инвентаре
-    [SerializeField] private float loadSpeedMultiplier = 0.1f; // скорость падает на X% за книгу
+    [Header("Inventory / Load")]
+    [SerializeField] private PlayerInventory playerInventory;
+    [SerializeField] private int booksUntilCantMove = 10; // при этом кол-ве книг нельзя двигаться
 
     [Header("Input")]
     [SerializeField] private InputActionReference moveAction;
@@ -43,6 +43,7 @@ public class PlayerMovementWithStamina : MonoBehaviour
     private float currentStamina;
     private float currentSpeed;
     private float rotationVelocity;
+
     private bool isActuallyMoving;
 
     private void OnEnable()
@@ -64,11 +65,9 @@ public class PlayerMovementWithStamina : MonoBehaviour
 
     private void Update()
     {
+        moveInput = moveAction.action.ReadValue<Vector2>();
         isSprinting = sprintAction.action.IsPressed() && currentStamina > 0f;
 
-        moveInput = moveAction.action.ReadValue<Vector2>();
-
-        // Оглушение при нуле стамины
         if (currentStamina <= 0f)
             exhaustionTimer = exhaustionDelay;
 
@@ -85,33 +84,36 @@ public class PlayerMovementWithStamina : MonoBehaviour
 
     private void HandleMovement()
     {
-        Vector3 direction = new Vector3(moveInput.x, 0f, moveInput.y);
+        Vector3 inputDir = new Vector3(moveInput.x, 0f, moveInput.y);
 
         int books = playerInventory != null ? playerInventory.booksCount : 0;
-        float loadMultiplier = Mathf.Max(0f, 1f - books * loadSpeedMultiplier);
 
-        float targetSpeed = baseMoveSpeed * loadMultiplier;
+        if (books >= booksUntilCantMove)
+        {
+            currentSpeed = 0f;
+            controller.Move(Vector3.zero);
+            isActuallyMoving = false;
+            return;
+        }
 
-        if (isSprinting)
-            targetSpeed *= sprintMultiplier;
-        else if (currentStamina <= 0f)
-            targetSpeed *= exhaustionSpeedMultiplier;
+        float loadPercent = Mathf.Clamp01((float)books / booksUntilCantMove);
 
+        float walkSpeed = baseMoveSpeed;
+
+        float sprintSpeed = Mathf.Lerp(baseMoveSpeed * sprintMultiplier, walkSpeed, loadPercent);
+
+        float targetSpeed = isSprinting ? sprintSpeed : walkSpeed;
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * 5f);
 
-        // Поворот относительно камеры
-        if (direction.magnitude >= 0.1f)
+        Vector3 direction = Vector3.zero;
+
+        if (inputDir.magnitude >= 0.1f)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + mainCamera.transform.eulerAngles.y;
+            float targetAngle = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg + mainCamera.transform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationVelocity, rotationSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            direction = moveDir.normalized * currentSpeed;
-        }
-        else
-        {
-            direction = Vector3.zero;
+            direction = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward * currentSpeed;
         }
 
         // Гравитация
@@ -122,18 +124,22 @@ public class PlayerMovementWithStamina : MonoBehaviour
         verticalVelocity += gravity * Time.deltaTime;
         direction.y = verticalVelocity;
 
-        Vector3 moveDelta = direction * Time.deltaTime;
-        controller.Move(moveDelta);
+        // Движение
+        Vector3 beforeMove = controller.transform.position;
+        controller.Move(direction * Time.deltaTime);
+        Vector3 afterMove = controller.transform.position;
 
-        Vector3 horizontalVelocity = new Vector3(controller.velocity.x, 0f, controller.velocity.z);
-        isActuallyMoving = horizontalVelocity.magnitude > 0.01f;
+        // Проверка, движемся ли мы реально (не врезаемся ли в стену)
+        Vector3 delta = afterMove - beforeMove;
+        delta.y = 0;
+        isActuallyMoving = delta.magnitude > 0.001f;
     }
 
     private void HandleStamina()
     {
         float staminaDrain = 0f;
 
-        // Тратим стамину только если игрок реально движется
+        // Стамина тратится только если игрок ДЕЙСТВИТЕЛЬНО движется
         if (moveInput.magnitude > 0.1f && isActuallyMoving)
         {
             staminaDrain = isSprinting ? staminaDrainPerSecond : staminaDrainPerSecond * 0.4f;
@@ -142,18 +148,16 @@ public class PlayerMovementWithStamina : MonoBehaviour
         currentStamina -= staminaDrain * Time.deltaTime;
         currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
 
-        // Восстановление, если стоим
+        // Восстановление, если не двигаемся
         if (moveInput.magnitude <= 0.1f || !isActuallyMoving)
-        {
             currentStamina += staminaRecoverPerSecond * Time.deltaTime;
-            currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
-        }
 
-        // Обновление UI
+        currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
+
+        // UI
         float percent = currentStamina / maxStamina;
         Color gradientColor = Color.Lerp(normalColor, lowStaminaColor, 1f - percent);
 
-        // Мигание при критически низкой стамине (<10%)
         if (percent < 0.1f)
         {
             float t = Mathf.PingPong(Time.time * blinkSpeed, 1f);
@@ -162,6 +166,11 @@ public class PlayerMovementWithStamina : MonoBehaviour
         }
 
         staminaBar.color = gradientColor;
+    }
+
+    public bool IsSprinting()
+    {
+        return isSprinting;
     }
 
     public float GetCurrentStaminaPercent()

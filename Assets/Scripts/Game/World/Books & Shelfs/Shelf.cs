@@ -4,6 +4,7 @@ public class Shelf : Interactable
 {
     public int totalSlots = 3;
     public int storedBooks = 0;
+    public string shelfId = "History"; 
 
     public override void Interact(PlayerInventory inventory)
     {
@@ -11,15 +12,15 @@ public class Shelf : Interactable
         {
             storedBooks++;
             inventory.booksCount--;
-            Debug.Log($"Книга добавлена на полку. Теперь в полке {storedBooks}/{totalSlots}.");
+            Debug.Log($"Книга добавлена на полку {shelfId}. Сейчас: {storedBooks}/{totalSlots}");
         }
         else if (storedBooks >= totalSlots)
         {
-            Debug.Log("Полка уже заполнена!");
+            Debug.Log($"Полка {shelfId} уже заполнена!");
         }
         else
         {
-            Debug.Log("У вас нет книг, чтобы положить на полку.");
+            Debug.Log("У вас нет книг для полки.");
         }
     }
 }
