@@ -2,29 +2,25 @@ using UnityEngine;
 
 public class Book : Interactable
 {
+    public string bookId;
     [SerializeField] private NPC questNPC; // NPC, который дал задание
     [SerializeField] private Shelf shelf;
 
-    public void SetShelfAndNPC(Shelf s, NPC npc)
+    public void Initialize(string id, Shelf s, NPC npc)
     {
+        bookId = id;
         shelf = s;
         questNPC = npc;
     }
 
     public override void Interact(PlayerInventory inventory)
     {
-        inventory.booksCount++;
-        Debug.Log($"Книга поднята! Всего книг: {inventory.booksCount}");
-
-        if (questNPC != null)
+        if (inventory.AddBook(this))
         {
-            // Увеличиваем счётчик на полке
-            if (questNPC.GetComponent<Shelf>() != null)
-                questNPC.GetComponent<Shelf>().storedBooks++;
+            gameObject.SetActive(false);
 
-            questNPC.CollectBook(); // уведомляем NPC/UI
+            if (questNPC != null)
+                questNPC.CollectBook();
         }
-
-        gameObject.SetActive(false); // "исчезает"
     }
 }

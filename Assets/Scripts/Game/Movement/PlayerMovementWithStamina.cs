@@ -86,7 +86,7 @@ public class PlayerMovementWithStamina : MonoBehaviour
     {
         Vector3 inputDir = new Vector3(moveInput.x, 0f, moveInput.y);
 
-        int books = playerInventory != null ? playerInventory.booksCount : 0;
+        int books = playerInventory != null ? playerInventory.slots.Length : 0;
 
         if (books >= booksUntilCantMove)
         {

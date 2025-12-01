@@ -133,7 +133,7 @@ public class NPC : Interactable
             Transform point = spawnPoints[Random.Range(0, spawnPoints.Length)];
             GameObject bookObj = Instantiate(bookPrefab, point.position, point.rotation);
             Book bookScript = bookObj.GetComponent<Book>();
-            bookScript.SetShelfAndNPC(shelf, this); // Передаём ссылки
+            bookScript.Initialize(shelf.shelfId, shelf, this);
             spawnedBooks[i] = bookObj;
         }
 
