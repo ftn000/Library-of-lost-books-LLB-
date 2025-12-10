@@ -83,7 +83,7 @@ public class NPC : Interactable
 
         Debug.Log($"[NPC] Interact called on {name}, questGiven={questGiven}, questCompleted={questCompleted}, state={GetDialogueState()}");
 
-        EventBus.Raise(new DialogueStartedEvent(this));
+        //EventBus.Raise(new DialogueStartedEvent(this));
     }
 
     public void EndDialogue()
@@ -133,7 +133,7 @@ public class NPC : Interactable
             Transform point = spawnPoints[Random.Range(0, spawnPoints.Length)];
             GameObject bookObj = Instantiate(bookPrefab, point.position, point.rotation);
             Book bookScript = bookObj.GetComponent<Book>();
-            bookScript.Initialize(shelf.shelfId, shelf, this);
+            /*bookScript.Initialize(shelf.shelfId, shelf, this);*/
             spawnedBooks[i] = bookObj;
         }
 

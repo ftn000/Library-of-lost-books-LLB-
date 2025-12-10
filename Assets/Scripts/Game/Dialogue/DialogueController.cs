@@ -15,7 +15,7 @@ public class DialogueController : MonoBehaviour
     private DialogueNode[] nodes;
     private int currentNodeIndex;
     private Coroutine typingCoroutine;
-    private NPC currentNPC;
+    private NPCBase currentNPC;
 
     public bool IsTyping => typingCoroutine != null;
 
@@ -39,7 +39,7 @@ public class DialogueController : MonoBehaviour
         Debug.Log($"[DialogueController] Dialogue started with NPC {evt.npc.name}");
 
         currentNPC = evt.npc;
-        nodes = currentNPC.GetCurrentDialogue();
+        //nodes = currentNPC.GetCurrentDialogue();
 
         if (nodes == null || nodes.Length == 0)
         {
@@ -136,7 +136,7 @@ public class DialogueController : MonoBehaviour
     public void EndDialogue()
     {
         dialoguePanel.SetActive(false);
-        currentNPC?.EndDialogue();
+        //currentNPC?.EndDialogue();
         EventBus.Raise(new DialogueEndedEvent(currentNPC));
         currentNPC = null;
     }

@@ -1,11 +1,11 @@
 public struct DialogueStartedEvent
 {
-    public NPC npc;
-    public DialogueStartedEvent(NPC npc) => this.npc = npc;
+    public NPCBase npc;
+    public DialogueStartedEvent(NPCBase npc) => this.npc = npc;
 }
 
 public struct DialogueEndedEvent
 {
-    public NPC npc;
-    public DialogueEndedEvent(NPC npc) => this.npc = npc;
+    public NPCBase npc;
+    public DialogueEndedEvent(NPCBase npc) => this.npc = npc;
 }

@@ -3,10 +3,10 @@ using UnityEngine;
 public class Book : Interactable
 {
     public string bookId;
-    [SerializeField] private NPC questNPC; // NPC, который дал задание
-    [SerializeField] private Shelf shelf;
+    private NPCBase questNPC;
+    private Shelf shelf;
 
-    public void Initialize(string id, Shelf s, NPC npc)
+    public void Initialize(string id, Shelf s, NPCBase npc)
     {
         bookId = id;
         shelf = s;
@@ -18,9 +18,7 @@ public class Book : Interactable
         if (inventory.AddBook(this))
         {
             gameObject.SetActive(false);
-
-            if (questNPC != null)
-                questNPC.CollectBook();
+            //questNPC?.CollectBook();
         }
     }
 }
