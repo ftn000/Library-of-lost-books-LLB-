@@ -172,8 +172,7 @@ public abstract class NPCBase : MonoBehaviour
         if (patrolPoints == null || patrolPoints.Length == 0)
             return;
 
-        var target = patrolPoints[patrolIndex];
-
+        Transform target = patrolPoints[patrolIndex];
         Vector3 to = target.position - transform.position;
         to.y = 0;
 
@@ -184,21 +183,39 @@ public abstract class NPCBase : MonoBehaviour
         {
             OnPatrolPoint(target);
 
-            patrolIndex = (patrolIndex + 1) % patrolPoints.Length;
-
+            // выбираем следующую точку случайно
+            patrolIndex = ChooseNextPatrolIndex();
             return;
         }
 
-        // ходим
         Move(to.normalized);
 
-        // поворот
+        // плавный поворот
         if (dist > arriveDistance * 2f)
             transform.forward = Vector3.Lerp(transform.forward,
                                              to.normalized,
                                              Time.deltaTime * 6f);
     }
 
+    protected virtual int ChooseNextPatrolIndex()
+    {
+        if (patrolPoints == null || patrolPoints.Length == 0) return 0;
+
+        int next;
+        int tries = 0;
+        do
+        {
+            next = Random.Range(0, patrolPoints.Length);
+            tries++;
+            // избегаем повторений, если recent используется
+        } while (recent.Contains(next) && tries < 10);
+
+        recent.Add(next);
+        if (recent.Count > rememberCount)
+            recent.RemoveAt(0);
+
+        return next;
+    }
 
 
     // ----------------------------------------------------------

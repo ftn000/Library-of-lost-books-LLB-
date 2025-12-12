@@ -316,6 +316,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 43260700}
+  - component: {fileID: 43260701}
   m_Layer: 0
   m_Name: BookPoint
   m_TagString: Untagged
@@ -332,12 +333,25 @@ Transform:
   m_GameObject: {fileID: 43260699}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.08793, y: 0, z: 8.84117}
+  m_LocalPosition: {x: 13.09, y: 0.78, z: 15.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1628925086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &43260701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43260699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619b40029d73612439f97dcc77b921ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBook: 0
 --- !u!1 &58903687
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,6 +589,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 177095883}
+  - component: {fileID: 177095884}
   m_Layer: 0
   m_Name: BookPoint
   m_TagString: Untagged
@@ -591,12 +606,25 @@ Transform:
   m_GameObject: {fileID: 177095882}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.23, y: 0, z: 20.38}
+  m_LocalPosition: {x: 9.74, y: 0, z: -14.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1628925086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &177095884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177095882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619b40029d73612439f97dcc77b921ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBook: 1
 --- !u!1 &196089198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,7 +1055,7 @@ Transform:
   m_GameObject: {fileID: 253775333}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.52, y: 1.5, z: 26.3}
+  m_LocalPosition: {x: 20.52, y: 1.5, z: 32.08}
   m_LocalScale: {x: 1, y: 3, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1169,6 +1197,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 267582154}
+  - component: {fileID: 267582155}
   m_Layer: 0
   m_Name: BookPoint
   m_TagString: Untagged
@@ -1191,6 +1220,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1628925086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &267582155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267582153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619b40029d73612439f97dcc77b921ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBook: 0
 --- !u!1 &268428973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,6 +1565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 313705441}
+  - component: {fileID: 313705442}
   m_Layer: 0
   m_Name: BookPoint
   m_TagString: Untagged
@@ -1545,6 +1588,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1628925086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &313705442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313705440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619b40029d73612439f97dcc77b921ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBook: 0
 --- !u!114 &314827665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2011,12 +2067,12 @@ GameObject:
   - component: {fileID: 404422085}
   - component: {fileID: 404422084}
   m_Layer: 3
-  m_Name: NPC(out of date)
+  m_Name: Mischief
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &404422083
 Transform:
   m_ObjectHideFlags: 0
@@ -2026,7 +2082,7 @@ Transform:
   m_GameObject: {fileID: 404422082}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 212.74516, y: 807.237, z: 1510.2635}
+  m_LocalPosition: {x: 212.75, y: 807.237, z: 1514.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2069,18 +2125,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1533b149c89e23344bbe1ad6553b815c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npc: {fileID: 404422088}
-  playerInventory: {fileID: 1596855127}
+  speed: 16
+  controller: {fileID: 404422084}
   patrolParent: {fileID: 2109339929}
-  patrolSpeed: 2
+  rememberCount: 3
+  detectDist: 0.55
+  avoidTime: 0.6
+  gazeRadius: 2
+  gazeSpeed: 5
+  gazeParent: {fileID: 259200236}
+  arriveDistance: 0.3
   shelvesParent: {fileID: 259200236}
   wrongSpotsParent: {fileID: 1628925086}
   timeBetweenMessing: 3
-  carrySpeed: 1.5
+  carrySpeed: 12
   bookPrefab: {fileID: 8862279705693522542, guid: 680e21977edce5a4282e6e8df6e23d7a, type: 3}
-  npcHeight: 0.5
   bookHeight: 0.25
-  controller: {fileID: 404422084}
 --- !u!212 &404422086
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2695,6 +2755,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 528812021}
+  - component: {fileID: 528812022}
   m_Layer: 0
   m_Name: BookPoint
   m_TagString: Untagged
@@ -2717,6 +2778,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1628925086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &528812022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528812020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619b40029d73612439f97dcc77b921ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBook: 0
 --- !u!1 &534924324
 GameObject:
   m_ObjectHideFlags: 0
@@ -4865,7 +4939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81a6a8a4afe063408aaa782b3cf7a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 16
   controller: {fileID: 756001970}
   patrolParent: {fileID: 2109339929}
   rememberCount: 3
@@ -4878,6 +4952,7 @@ MonoBehaviour:
   inspectionPoints:
   - {fileID: 1934726950}
   - {fileID: 951605576}
+  - {fileID: 1576373893}
   - {fileID: 1292715007}
 --- !u!1 &759385470
 GameObject:
@@ -5222,6 +5297,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 820622821}
+  - component: {fileID: 820622822}
   m_Layer: 0
   m_Name: BookPoint
   m_TagString: Untagged
@@ -5244,6 +5320,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1628925086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &820622822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820622820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619b40029d73612439f97dcc77b921ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBook: 0
 --- !u!1 &830514041
 GameObject:
   m_ObjectHideFlags: 0
@@ -5614,7 +5703,9 @@ MonoBehaviour:
   shelves:
   - {fileID: 1011353141}
   - {fileID: 253775335}
-  misplacedSpots: []
+  misplacedSpots:
+  - {fileID: 177095884}
+  - {fileID: 43260701}
   dirtSpots: []
   visitors: []
   debugLog: 0
@@ -6266,6 +6357,7 @@ Transform:
   - {fileID: 1934726949}
   - {fileID: 951605575}
   - {fileID: 1292715006}
+  - {fileID: 1576373892}
   m_Father: {fileID: 2092199154}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1103234148
@@ -6614,6 +6706,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1151437353}
+  - component: {fileID: 1151437354}
   m_Layer: 0
   m_Name: BookPoint
   m_TagString: Untagged
@@ -6636,6 +6729,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1628925086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1151437354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151437352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619b40029d73612439f97dcc77b921ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBook: 0
 --- !u!1 &1158025569
 GameObject:
   m_ObjectHideFlags: 0
@@ -7609,7 +7715,7 @@ Transform:
   m_GameObject: {fileID: 1292715005}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25.8, y: 0, z: -29.73}
+  m_LocalPosition: {x: -18.76, y: 0, z: -29.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7627,10 +7733,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d06353873775b43b81f740d2e5e460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shelves: []
-  misplacedSpots: []
+  shelves:
+  - {fileID: 1720137699}
+  misplacedSpots:
+  - {fileID: 1432034352}
   dirtSpots: []
-  visitors: []
+  visitors:
+  - {fileID: 1858278002}
   debugLog: 1
 --- !u!1 &1323147000
 GameObject:
@@ -7736,7 +7845,7 @@ Transform:
   m_GameObject: {fileID: 1343494455}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.29, y: 1.5, z: -27.9}
+  m_LocalPosition: {x: 7.29, y: 1.5, z: -32.07}
   m_LocalScale: {x: 1, y: 3, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7917,6 +8026,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1432034351}
+  - component: {fileID: 1432034352}
   m_Layer: 0
   m_Name: BookPoint
   m_TagString: Untagged
@@ -7939,6 +8049,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1628925086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1432034352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432034350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619b40029d73612439f97dcc77b921ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBook: 1
 --- !u!114 &1448505465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8404,6 +8527,60 @@ Transform:
   - {fileID: 746261009}
   m_Father: {fileID: 15172696}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1576373891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1576373892}
+  - component: {fileID: 1576373893}
+  m_Layer: 0
+  m_Name: InspectorPoint (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1576373892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576373891}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -22.84, y: 0, z: 21.64}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1068454754}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1576373893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576373891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74d06353873775b43b81f740d2e5e460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shelves:
+  - {fileID: 1508974432}
+  misplacedSpots:
+  - {fileID: 820622822}
+  - {fileID: 267582155}
+  - {fileID: 313705442}
+  - {fileID: 1151437354}
+  dirtSpots: []
+  visitors: []
+  debugLog: 1
 --- !u!1 &1579807156
 GameObject:
   m_ObjectHideFlags: 0
@@ -9112,7 +9289,7 @@ Transform:
   m_GameObject: {fileID: 1720137697}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -28.22, y: 1.5, z: -33.2}
+  m_LocalPosition: {x: -16.9, y: 1.5, z: -33.2}
   m_LocalScale: {x: 10, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10212,7 +10389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c7c6abb09886241a0b3d80258c90b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 16
   controller: {fileID: 1858278001}
   patrolParent: {fileID: 2109339929}
   rememberCount: 3
@@ -10830,7 +11007,7 @@ Transform:
   m_GameObject: {fileID: 1934726948}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.76, y: 0, z: -29.67}
+  m_LocalPosition: {x: 13.76, y: 0, z: -24.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10851,7 +11028,11 @@ MonoBehaviour:
   shelves:
   - {fileID: 1343494457}
   - {fileID: 672648477}
-  misplacedSpots: []
+  misplacedSpots:
+  - {fileID: 2000001375}
+  - {fileID: 2000001375}
+  - {fileID: 177095884}
+  - {fileID: 528812022}
   dirtSpots: []
   visitors: []
   debugLog: 0
@@ -10927,6 +11108,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2000001374}
+  - component: {fileID: 2000001375}
   m_Layer: 0
   m_Name: BookPoint
   m_TagString: Untagged
@@ -10949,6 +11131,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1628925086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2000001375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000001373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619b40029d73612439f97dcc77b921ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBook: 0
 --- !u!1 &2050001531
 GameObject:
   m_ObjectHideFlags: 0
