@@ -10,6 +10,7 @@ public class MischiefNPC : NPCBase
     [SerializeField] private float carrySpeed = 1.5f;
     [SerializeField] private GameObject bookPrefab;
     [SerializeField] private float bookHeight = 0.25f;
+    [SerializeField] private GameObject missedBooks;
 
     private Shelf[] shelves;
     private Transform[] wrongSpots;
@@ -109,7 +110,7 @@ public class MischiefNPC : NPCBase
             // окончательная позиция книги
             Vector3 finalPos = wrongSpot.position;
             finalPos.y = bookHeight;
-            bookObj.transform.SetParent(null);
+            bookObj.transform.SetParent(missedBooks.transform);
             bookObj.transform.position = finalPos;
 
             // включаем коллайдер обратно

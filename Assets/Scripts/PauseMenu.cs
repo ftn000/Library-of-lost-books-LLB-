@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject menuUI;
+    [SerializeField] private GameObject confirmPanel;
+    [SerializeField] private ButtonSelectionGroup selectionGroup;
+
     private bool isPaused = false;
 
     void Update()
@@ -12,37 +15,46 @@ public class PauseMenu : MonoBehaviour
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             if (isPaused)
-                Resume();
+                Continue();
             else
                 Pause();
         }
     }
 
-    public void Resume()
+    public void Continue()
     {
         menuUI.SetActive(false);
-        Time.timeScale = 1f; // Возобновляем игру
+        confirmPanel.SetActive(false);
+        selectionGroup.ClearSelection();
+
+        Time.timeScale = 1f;
         isPaused = false;
     }
 
-    void Pause()
+    public void Pause()
     {
         menuUI.SetActive(true);
-        Time.timeScale = 0f; // Ставим игру на паузу
+        confirmPanel.SetActive(false);
+        selectionGroup.ClearSelection();
+
+        Time.timeScale = 0f;
         isPaused = true;
     }
 
-    public void QuitGame()
+    public void PanelActivate()
     {
-        /*
-        // Для сборки
-        Application.Quit();
-        // Для Unity Editor
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
-        */
+        confirmPanel.SetActive(true);
+        selectionGroup.ClearSelection();
+    }
 
+    public void PanelDeactivate()
+    {
+        confirmPanel.SetActive(false);
+        selectionGroup.ClearSelection();
+    }
+
+    public void QuitGame() 
+    {
         SceneManager.LoadScene("MainMenu");
     }
 }

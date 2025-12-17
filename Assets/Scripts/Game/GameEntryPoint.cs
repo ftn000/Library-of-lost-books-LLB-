@@ -8,6 +8,7 @@ public class GameEntryPoint : MonoBehaviour
     [SerializeField] DialogueController dialogueController;
     [SerializeField] PlayerMovementWithStamina movementWithStamina;
     [SerializeField] QuestUI questUI;
+    [SerializeField] InventoryUI inventoryUI;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,6 +18,7 @@ public class GameEntryPoint : MonoBehaviour
         dialogueController.Initialize();
         movementWithStamina.Initialize();
         questUI.Initialize();
+        inventoryUI.Initialize();
     }
 
     // Update is called once per frame

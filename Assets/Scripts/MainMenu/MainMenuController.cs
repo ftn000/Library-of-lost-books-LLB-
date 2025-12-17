@@ -11,6 +11,7 @@ public class MainMenuController : MonoBehaviour
     {
         Debug.Log("[MainMenu] Starting game...");
         SceneManager.LoadScene(gameSceneName);
+        Time.timeScale = 1f;
     }
 
     public void OpenSettings()

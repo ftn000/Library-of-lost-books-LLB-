@@ -21,4 +21,5 @@ public class Book : Interactable
             //questNPC?.CollectBook();
         }
     }
+
 }

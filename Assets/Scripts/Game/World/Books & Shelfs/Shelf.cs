@@ -29,6 +29,7 @@ public class Shelf : Interactable
         }
 
         storedBooks++;
+        Destroy(selected.gameObject);
         inventory.RemoveSelectedBook();
         Debug.Log($"Книга [{selected.bookId}] поставлена на полку [{shelfId}] ({storedBooks}/{totalSlots})");
     }

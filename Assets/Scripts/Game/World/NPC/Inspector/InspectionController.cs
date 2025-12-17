@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 
 public class InspectionController : MonoBehaviour
 {
@@ -24,9 +23,16 @@ public class InspectionController : MonoBehaviour
 
         InspectionScore.Reset();
         ResetTimer();
+    }
 
-        InspectorAI.OnInspectionFinished -= HandleInspectionFinished;
+    private void OnEnable()
+    {
         InspectorAI.OnInspectionFinished += HandleInspectionFinished;
+    }
+
+    private void OnDisable()
+    {
+        InspectorAI.OnInspectionFinished -= HandleInspectionFinished;
     }
 
     private void OnDestroy()
@@ -62,16 +68,15 @@ public class InspectionController : MonoBehaviour
     private void HandleInspectionFinished(int score, bool success)
     {
         _inspectionInProgress = false;
-        // тут можно трекать статистику, логировать и т.д.
+        // —брос таймера дл€ следующей инспекции
         ResetTimer();
     }
 
     private void ResetTimer()
     {
-        _timer = UnityEngine.Random.Range(minTime, maxTime);
+        _timer = Random.Range(minTime, maxTime);
     }
 
-    // Debug: форсировать инспекцию из кода / редактора
     public void ForceInspection()
     {
         ResetTimer();
