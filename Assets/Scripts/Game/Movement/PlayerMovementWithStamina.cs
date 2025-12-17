@@ -1,6 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum LookDir
+{
+    Up = 0,
+    Down = 1,
+    Left = 2,
+    Right = 3
+}
+
+
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovementWithStamina : MonoBehaviour
 {
@@ -36,6 +45,12 @@ public class PlayerMovementWithStamina : MonoBehaviour
 
     [Header("Gravity")]
     [SerializeField] private float gravity = -9.81f;
+
+    [Header("Anim")]
+    [SerializeField] private Animator animator;
+
+    private LookDir lastDir = LookDir.Down;
+
     private float verticalVelocity;
     private bool isGrounded;
 
@@ -82,6 +97,39 @@ public class PlayerMovementWithStamina : MonoBehaviour
         HandleStamina();
     }
 
+    LookDir Get4Dir(Vector2 dir)
+    {
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+            return dir.x > 0 ? LookDir.Right : LookDir.Left;
+        else
+            return dir.y > 0 ? LookDir.Up : LookDir.Down;
+    }
+
+    void UpdateVisualFromDelta(Vector2 delta)
+    {
+        if (delta.sqrMagnitude < 0.0001f)
+            return; // стоим Ч направление не мен€ем
+
+        Vector2 dir = delta.normalized;
+
+        float x = 0f;
+        float y = 0f;
+
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+        {
+            x = dir.x > 0 ? 1f : -1f;
+            y = 0f;
+        }
+        else
+        {
+            x = 0f;
+            y = dir.y > 0 ? 1f : -1f;
+        }
+
+        animator.SetFloat("InputX", x);
+        animator.SetFloat("InputY", y);
+    }
+
     private void HandleMovement()
     {
         Vector3 inputDir = new Vector3(moveInput.x, 0f, moveInput.y);
@@ -111,7 +159,7 @@ public class PlayerMovementWithStamina : MonoBehaviour
         {
             float targetAngle = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg + mainCamera.transform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationVelocity, rotationSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            //transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             direction = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward * currentSpeed;
         }
@@ -133,6 +181,8 @@ public class PlayerMovementWithStamina : MonoBehaviour
         Vector3 delta = afterMove - beforeMove;
         delta.y = 0;
         isActuallyMoving = delta.magnitude > 0.001f;
+
+        UpdateVisualFromDelta(new Vector2(delta.x, delta.z));
     }
 
     private void HandleStamina()
