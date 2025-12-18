@@ -97,37 +97,35 @@ public class PlayerMovementWithStamina : MonoBehaviour
         HandleStamina();
     }
 
-    LookDir Get4Dir(Vector2 dir)
+    LookDir Get8Dir(Vector2 dir)
     {
-        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
-            return dir.x > 0 ? LookDir.Right : LookDir.Left;
-        else
-            return dir.y > 0 ? LookDir.Up : LookDir.Down;
+        if (dir.x > 0 && dir.y > 0) return LookDir.Up;        // NE
+        if (dir.x < 0 && dir.y > 0) return LookDir.Up;        // NW
+        if (dir.x > 0 && dir.y < 0) return LookDir.Down;      // SE
+        if (dir.x < 0 && dir.y < 0) return LookDir.Down;      // SW
+
+        if (dir.x > 0) return LookDir.Right;
+        if (dir.x < 0) return LookDir.Left;
+        if (dir.y > 0) return LookDir.Up;
+        return LookDir.Down;
     }
+
 
     void UpdateVisualFromDelta(Vector2 delta)
     {
         if (delta.sqrMagnitude < 0.0001f)
-            return; // стоим Ч направление не мен€ем
+            return;
 
         Vector2 dir = delta.normalized;
 
-        float x = 0f;
-        float y = 0f;
+        // ќкругл€ем к ближайшему из 8 направлений
+        dir.x = Mathf.Round(dir.x);
+        dir.y = Mathf.Round(dir.y);
 
-        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
-        {
-            x = dir.x > 0 ? 1f : -1f;
-            y = 0f;
-        }
-        else
-        {
-            x = 0f;
-            y = dir.y > 0 ? 1f : -1f;
-        }
+        animator.SetFloat("InputX", dir.x);
+        animator.SetFloat("InputY", dir.y);
 
-        animator.SetFloat("InputX", x);
-        animator.SetFloat("InputY", y);
+        lastDir = Get8Dir(dir);
     }
 
     private void HandleMovement()

@@ -4954,7 +4954,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae246c7bc6113448877ca2762a74e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Corners: {fileID: 398973849}
   rightText: {fileID: 261512661}
   hintText: Volume
   selectable: 1
@@ -6007,7 +6006,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 79718196}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Open
+        m_MethodName: Continue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6067,7 +6066,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae246c7bc6113448877ca2762a74e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Corners: {fileID: 398973849}
   rightText: {fileID: 261512661}
   hintText: Tasks
   selectable: 1
@@ -8103,7 +8101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae246c7bc6113448877ca2762a74e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Corners: {fileID: 398973849}
   rightText: {fileID: 261512661}
   hintText: Are you sure?
   selectable: 1
@@ -10539,6 +10536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef5138a978a5bd46a2d10362fb3222f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  corners: {fileID: 398973849}
 --- !u!1 &1628925085
 GameObject:
   m_ObjectHideFlags: 0

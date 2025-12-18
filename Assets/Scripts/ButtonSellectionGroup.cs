@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class ButtonSelectionGroup : MonoBehaviour
 {
-    private ButtonHoverEffect current;
+    [SerializeField] private GameObject corners;
+
+    private ButtonHoverEffect currentSelected;
+    private ButtonHoverEffect currentHover;
 
     private void Awake()
     {
@@ -11,23 +14,60 @@ public class ButtonSelectionGroup : MonoBehaviour
             button.Init(this);
     }
 
+    // ====== HOVER ======
+
+    public void Hover(ButtonHoverEffect button)
+    {
+        currentHover = button;
+        MoveCorners(button);
+    }
+
+    public void Unhover(ButtonHoverEffect button)
+    {
+        if (currentHover != button)
+            return;
+
+        currentHover = null;
+
+        // Возвращаем стрелки на выбранную кнопку
+        if (currentSelected != null)
+            MoveCorners(currentSelected);
+        else
+            corners.SetActive(false);
+    }
+
+    // ====== SELECTION ======
+
     public void Select(ButtonHoverEffect button)
     {
-        if (current == button)
+        if (currentSelected == button)
             return;
 
         ClearSelection();
 
-        current = button;
-        current.SetSelected(true);
+        currentSelected = button;
+        currentSelected.SetSelected(true);
+        MoveCorners(button);
     }
+
+    // ====== PUBLIC API ======
 
     public void ClearSelection()
     {
-        if (current == null)
-            return;
+        if (currentSelected != null)
+            currentSelected.SetSelected(false);
 
-        current.SetSelected(false);
-        current = null;
+        currentSelected = null;
+        currentHover = null;
+
+        corners.SetActive(false);
+    }
+
+    // ====== VISUAL ======
+
+    private void MoveCorners(ButtonHoverEffect button)
+    {
+        corners.transform.position = button.transform.position;
+        corners.SetActive(true);
     }
 }

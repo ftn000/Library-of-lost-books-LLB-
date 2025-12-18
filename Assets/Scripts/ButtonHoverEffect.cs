@@ -7,7 +7,6 @@ public class ButtonHoverEffect : MonoBehaviour,
     IPointerExitHandler,
     IPointerClickHandler
 {
-    [SerializeField] private GameObject Corners;
     [SerializeField] private TMP_Text rightText;
     [SerializeField] private string hintText;
     [SerializeField] private bool selectable = true;
@@ -20,40 +19,26 @@ public class ButtonHoverEffect : MonoBehaviour,
         group = owner;
     }
 
-    // ====== PUBLIC API ======
-
     public void SetSelected(bool value)
     {
         isSelected = value;
 
         if (isSelected)
-        {
-            ShowCorners();
             ShowText();
-        }
         else
-        {
-            HideCorners();
             HideText();
-        }
     }
 
-    // ====== POINTER EVENTS ======
+    // ====== POINTER ======
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (isSelected)
-            return;
-
-        ShowCorners();
+        group.Hover(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (isSelected)
-            return;
-
-        HideCorners();
+        group.Unhover(this);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -64,18 +49,7 @@ public class ButtonHoverEffect : MonoBehaviour,
         group.Select(this);
     }
 
-    // ====== VISUAL ======
-
-    private void ShowCorners()
-    {
-        Corners.transform.position = transform.position;
-        Corners.SetActive(true);
-    }
-
-    private void HideCorners()
-    {
-        Corners.SetActive(false);
-    }
+    // ====== TEXT ======
 
     private void ShowText()
     {
