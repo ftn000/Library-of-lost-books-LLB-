@@ -1997,7 +1997,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2085,7 +2085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1596855124}
-  baseOffset: {x: 0, y: 12, z: -15}
+  baseOffset: {x: 0, y: 11, z: -14}
   smoothTime: 0.3
   sprintForwardOffset: 2
   walkForwardOffset: 0.5
