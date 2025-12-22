@@ -35,11 +35,6 @@ public class InspectionController : MonoBehaviour
         InspectorAI.OnInspectionFinished -= HandleInspectionFinished;
     }
 
-    private void OnDestroy()
-    {
-        InspectorAI.OnInspectionFinished -= HandleInspectionFinished;
-    }
-
     private void Start()
     {
         if (startOnAwake) ResetTimer();
@@ -54,6 +49,11 @@ public class InspectionController : MonoBehaviour
         {
             StartInspection();
         }
+    }
+
+    public int getTimer()
+    {
+        return (int)_timer;
     }
 
     private void StartInspection()
