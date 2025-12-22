@@ -37,6 +37,10 @@ public class PlayerOcclusionHighlight : MonoBehaviour
         highlightSprite.enabled = occluded;
 
         if (occluded)
-            highlightSprite.sprite = mainSprite.sprite;
+        {
+            Debug.Log(mainSprite.sprite + "occluded");
+            highlightSprite.sprite = mainSprite.sprite; 
+        }
+
     }
 }
