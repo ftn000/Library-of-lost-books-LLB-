@@ -13,6 +13,9 @@ public class TaskManager : MonoBehaviour
     private void Update()
     {
         missedBooks.text = $"Missed Books: {MissedBooksCount}";
-        inspectionTimer.text = $"Inspection: {InspectionController.Instance.getTimer()}";
+        if (InspectionController.Instance.getTimer() != 0)
+            inspectionTimer.text = $"Inspection: {InspectionController.Instance.getTimer()}";
+        if (InspectionController.Instance.getTimer() == 0)
+            inspectionTimer.text = $"Inspection running";
     }
 }

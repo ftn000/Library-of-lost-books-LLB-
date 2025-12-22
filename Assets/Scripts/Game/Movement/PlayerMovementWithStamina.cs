@@ -48,6 +48,7 @@ public class PlayerMovementWithStamina : MonoBehaviour
 
     [Header("Anim")]
     [SerializeField] private Animator animator;
+    [SerializeField] PlayerOcclusionHighlight playerHighlight;
 
     private LookDir lastDir = LookDir.Down;
 
@@ -181,6 +182,7 @@ public class PlayerMovementWithStamina : MonoBehaviour
         isActuallyMoving = delta.magnitude > 0.001f;
 
         UpdateVisualFromDelta(new Vector2(delta.x, delta.z));
+        playerHighlight.UpdateFromPlayer(new Vector2(delta.x, delta.z));
     }
 
     private void HandleStamina()
